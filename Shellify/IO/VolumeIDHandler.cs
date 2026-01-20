@@ -65,7 +65,7 @@ namespace Shellify.IO
 			Marshal.SizeOf(typeof(int)) +
 			Marshal.SizeOf(_item.DriveSerialNumber) +
 			Marshal.SizeOf(VolumeLabelOffset) +
-			Encoding.Default.GetASCIIZSize(_item.VolumeLabel);
+			DefaultEncoding.Instance.GetASCIIZSize(_item.VolumeLabel);
 
 		public void WriteTo(BinaryWriter writer)
 		{
@@ -87,7 +87,7 @@ namespace Shellify.IO
 			// VolumeLabelOffsetUnicode = 
 			// VolumeLabelOffset = &H14 
 
-			writer.WriteASCIIZ(_item.VolumeLabel, Encoding.Default);
+			writer.WriteASCIIZ(_item.VolumeLabel, DefaultEncoding.Instance);
 		}
 	}
 }

@@ -89,7 +89,7 @@ namespace Shellify.IO
 				             Marshal.SizeOf(typeof(int)) * 2 +
 				             Marshal.SizeOf(NetNameOffset) +
 				             Marshal.SizeOf(DeviceNameOffset) +
-				             Encoding.Default.GetASCIIZSize(Item.NetName);
+				             DefaultEncoding.Instance.GetASCIIZSize(Item.NetName);
 
 				// TODO: Handle unicode strings and offsets
 				// NetNameOffsetUnicode = 
@@ -98,7 +98,7 @@ namespace Shellify.IO
 
 				if ((Item.CommonNetworkRelativeLinkFlags & CommonNetworkRelativeLinkFlags.ValidDevice) != 0)
 				{
-					result += Encoding.Default.GetASCIIZSize(Item.DeviceName);
+					result += DefaultEncoding.Instance.GetASCIIZSize(Item.DeviceName);
 				}
 
 				return result;
@@ -121,7 +121,7 @@ namespace Shellify.IO
 			writer.Write(NetNameOffset);
 
 			DeviceNameOffset = (Item.CommonNetworkRelativeLinkFlags & CommonNetworkRelativeLinkFlags.ValidDevice) != 0
-				? NetNameOffset + Encoding.Default.GetASCIIZSize(Item.NetName)
+				? NetNameOffset + DefaultEncoding.Instance.GetASCIIZSize(Item.NetName)
 				: 0;
 			writer.Write(DeviceNameOffset);
 
@@ -136,9 +136,9 @@ namespace Shellify.IO
 			// DeviceNameOffsetUnicode = 
 			// NetNameOffset > &H14
 
-			writer.WriteASCIIZ(Item.NetName, Encoding.Default);
+			writer.WriteASCIIZ(Item.NetName, DefaultEncoding.Instance);
 			if (DeviceNameOffset > 0)
-				writer.WriteASCIIZ(Item.DeviceName, Encoding.Default);
+				writer.WriteASCIIZ(Item.DeviceName, DefaultEncoding.Instance);
 		}
 	}
 }

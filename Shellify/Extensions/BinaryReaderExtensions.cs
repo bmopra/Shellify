@@ -20,9 +20,11 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Shellify.IO;
 
 namespace Shellify.Extensions
 {
@@ -38,7 +40,7 @@ namespace Shellify.Extensions
 		public static string ReadASCIIZ(this BinaryReader reader, long baseOffset, long defaultOffset, long? unicodeOffset)
 		{
 			var offset = defaultOffset;
-			var encoding = Encoding.Default;
+			var encoding = DefaultEncoding.Instance;
 			if (unicodeOffset.HasValue)
 			{
 				offset = unicodeOffset.Value;

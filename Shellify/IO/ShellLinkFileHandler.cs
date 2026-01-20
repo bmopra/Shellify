@@ -41,7 +41,7 @@ namespace Shellify.IO
 
 		private string ReadStringData(BinaryReader reader, LinkFlags mask)
 		{
-			var enc = (Item.Header.LinkFlags & LinkFlags.IsUnicode) != 0 ? Encoding.Unicode : Encoding.Default;
+			var enc = (Item.Header.LinkFlags & LinkFlags.IsUnicode) != 0 ? Encoding.Unicode : DefaultEncoding.Instance;
 			return (Item.Header.LinkFlags & mask) != 0 ? reader.ReadSTDATA(enc) : null;
 		}
 
@@ -161,7 +161,7 @@ namespace Shellify.IO
 
 		private void WriteStringData(string value, BinaryWriter writer, LinkFlags mask)
 		{
-			var enc = ((Item.Header.LinkFlags & LinkFlags.IsUnicode) != 0) ? Encoding.Unicode : Encoding.Default;
+			var enc = ((Item.Header.LinkFlags & LinkFlags.IsUnicode) != 0) ? Encoding.Unicode : DefaultEncoding.Instance;
 			if ((Item.Header.LinkFlags & mask) != 0)
 				writer.WriteSTDATA(value, enc);
 		}

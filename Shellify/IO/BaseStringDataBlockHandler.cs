@@ -44,7 +44,7 @@ namespace Shellify.IO
 
 			FormatChecker.CheckExpression(() => BlockSize == ExactBlockSize);
 
-			Item.Value = reader.ReadASCIIZF(Encoding.Default, ValueSize, out var padding);
+			Item.Value = reader.ReadASCIIZF(DefaultEncoding.Instance, ValueSize, out var padding);
 			Item.ValuePadding = padding;
 
 			Item.ValueUnicode = reader.ReadASCIIZF(Encoding.Unicode, ValueSizeUnicode, out padding);
@@ -59,7 +59,7 @@ namespace Shellify.IO
 			FormatChecker.CheckExpression(() => Item.ValueUnicode == null || Item.ValueUnicode.Length < ValueSizeUnicode);
 			FormatChecker.CheckExpression(() => BlockSize == ExactBlockSize);
 
-			writer.WriteASCIIZF(Item.Value, Encoding.Default, ValueSize, Item.ValuePadding);
+			writer.WriteASCIIZF(Item.Value, DefaultEncoding.Instance, ValueSize, Item.ValuePadding);
 			writer.WriteASCIIZF(Item.ValueUnicode, Encoding.Unicode, ValueSizeUnicode, Item.ValueUnicodePadding);
 		}
 	}

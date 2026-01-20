@@ -57,7 +57,7 @@ namespace Shellify.IO
 			FormatChecker.CheckExpression(() => Length >= MinimumLength);
 
 			Item.Version = reader.ReadInt32();
-			Item.MachineID = reader.ReadASCIIZF(Encoding.Default, MachineIDLength); // 16 bytes, 0 fill
+			Item.MachineID = reader.ReadASCIIZF(DefaultEncoding.Instance, MachineIDLength); // 16 bytes, 0 fill
 			Item.Droid = new[] {new Guid(reader.ReadBytes(16)), new Guid(reader.ReadBytes(16))};
 			Item.DroidBirth = new[] {new Guid(reader.ReadBytes(16)), new Guid(reader.ReadBytes(16))};
 		}
@@ -76,7 +76,7 @@ namespace Shellify.IO
 
 			writer.Write(Length);
 			writer.Write(Item.Version);
-			writer.WriteASCIIZF(Item.MachineID, Encoding.Default, MachineIDLength);
+			writer.WriteASCIIZF(Item.MachineID, DefaultEncoding.Instance, MachineIDLength);
 			foreach (var guid in Item.Droid) writer.Write(guid.ToByteArray());
 			foreach (var guid in Item.DroidBirth) writer.Write(guid.ToByteArray());
 		}

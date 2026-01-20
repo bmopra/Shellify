@@ -126,7 +126,7 @@ namespace Shellify.IO
 			                     Marshal.SizeOf(CommonNetworkRelativeLinkOffset) +
 			                     Marshal.SizeOf(CommonPathSuffixOffset);
 
-			LinkInfoSize = LinkInfoHeaderSize + Encoding.Default.GetASCIIZSize(Item.CommonPathSuffix);
+			LinkInfoSize = LinkInfoHeaderSize + DefaultEncoding.Instance.GetASCIIZSize(Item.CommonPathSuffix);
 
 			VolumeIDHandler vidWriter = null;
 			CommonNetworkRelativeLinkHandler cnrWriter = null;
@@ -145,10 +145,10 @@ namespace Shellify.IO
 			if ((Item.LinkInfoFlags & LinkInfoFlags.VolumeIDAndLocalBasePath) != 0)
 			{
 				vidWriter = new VolumeIDHandler(Item.VolumeID);
-				LinkInfoSize += vidWriter.ComputedSize + Encoding.Default.GetASCIIZSize(Item.LocalBasePath);
+				LinkInfoSize += vidWriter.ComputedSize + DefaultEncoding.Instance.GetASCIIZSize(Item.LocalBasePath);
 				VolumeIDOffset = nextBlockOffset;
 				LocalBasePathOffset = VolumeIDOffset + vidWriter.ComputedSize;
-				CommonPathSuffixOffset = LocalBasePathOffset + Encoding.Default.GetASCIIZSize(Item.LocalBasePath);
+				CommonPathSuffixOffset = LocalBasePathOffset + DefaultEncoding.Instance.GetASCIIZSize(Item.LocalBasePath);
 				nextBlockOffset = CommonPathSuffixOffset + padding.Length;
 			}
 
@@ -177,7 +177,7 @@ namespace Shellify.IO
 			if (vidWriter != null)
 			{
 				vidWriter.WriteTo(writer);
-				writer.WriteASCIIZ(Item.LocalBasePath, Encoding.Default);
+				writer.WriteASCIIZ(Item.LocalBasePath, DefaultEncoding.Instance);
 			}
 
 			if (padding.Length > 0)
@@ -185,7 +185,7 @@ namespace Shellify.IO
 
 			cnrWriter?.WriteTo(writer);
 
-			writer.WriteASCIIZ(Item.CommonPathSuffix, Encoding.Default);
+			writer.WriteASCIIZ(Item.CommonPathSuffix, DefaultEncoding.Instance);
 		}
 	}
 }
